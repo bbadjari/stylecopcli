@@ -100,6 +100,9 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Constructor.
 		/// </summary>
+		/// <param name="filePath">
+		/// String representing path to solution file.
+		/// </param>
 		public SolutionFile(string filePath)
 			: base(FileExtension, filePath)
 		{
@@ -133,6 +136,9 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Add project file given line of input from solution file.
 		/// </summary>
+		/// <param name="inputLine">
+		/// String representing line of input from solution file.
+		/// </param>
 		void AddProjectFile(string inputLine)
 		{
 			Match match = Regex.Match(inputLine, ProjectTag.Regex.Pattern);
@@ -150,6 +156,15 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get match value at given group name.
 		/// </summary>
+		/// <param name="match">
+		/// Match representing regular expression match results.
+		/// </param>
+		/// <param name="groupName">
+		/// String representing name of group to match in given match results.
+		/// </param>
+		/// <returns>
+		/// String representing match value at given group name.
+		/// </returns>
 		static string GetMatchValue(Match match, string groupName)
 		{
 			Group group = match.Groups[groupName];
@@ -163,6 +178,10 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get C# project files contained in this solution file.
 		/// </summary>
+		/// <value>
+		/// Enumerable collection of CSharpProjectFile objects representing
+		/// C# project files referenced in solution file.
+		/// </value>
 		public IEnumerable<CSharpProjectFile> ProjectFiles
 		{
 			get { return m_projectFiles; }

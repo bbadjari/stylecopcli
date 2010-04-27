@@ -79,6 +79,9 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Constructor for specifying file path.
 		/// </summary>
+		/// <param name="filePath">
+		/// String representing path to project file.
+		/// </param>
 		public CSharpProjectFile(string filePath)
 			: this(null, filePath)
 		{
@@ -87,6 +90,12 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Constructor for specifying project name.
 		/// </summary>
+		/// <param name="projectName">
+		/// String representing project name.
+		/// </param>
+		/// <param name="filePath">
+		/// String representing path to project file.
+		/// </param>
 		public CSharpProjectFile(string projectName, string filePath)
 			: base(ProjectFileExtension, filePath)
 		{
@@ -122,6 +131,12 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Add source file contained within given XML node and namespace manager.
 		/// </summary>
+		/// <param name="node">
+		/// XmlNode containing source file.
+		/// </param>
+		/// <param name="namespaceManager">
+		/// XmlNamespaceManager managing XML namespace used in project file.
+		/// </param>
 		void AddSourceFile(XmlNode node, XmlNamespaceManager namespaceManager)
 		{
 			XmlNode childNode = node.SelectSingleNode(AutoGenElementXPath, namespaceManager);
@@ -158,6 +173,9 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Determine if project has name.
 		/// </summary>
+		/// <value>
+		/// True if project name is specified, false otherwise.
+		/// </value>
 		public bool HasProjectName
 		{
 			get { return ProjectName != null; }
@@ -166,6 +184,9 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get project name.
 		/// </summary>
+		/// <value>
+		/// String representing project name.
+		/// </value>
 		public string ProjectName
 		{
 			get { return m_projectName; }
@@ -174,6 +195,10 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get C# source file paths contained in this project file.
 		/// </summary>
+		/// <value>
+		/// Enumerable collection of strings representing paths to source files
+		/// referenced in project file.
+		/// </value>
 		public IEnumerable<string> SourceFilePaths
 		{
 			get { return m_sourceFilePaths; }
