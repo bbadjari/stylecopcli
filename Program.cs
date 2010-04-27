@@ -29,18 +29,21 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Microsoft.StyleCop;
 using CSharpCLI.Argument;
 using CSharpCLI.Help;
 using CSharpCLI.Parse;
+using Microsoft.StyleCop;
 using StyleCopCLI.InputFile;
 
 namespace StyleCopCLI
 {
 	/// <summary>
-	/// Command-line interface to StyleCop source code analyzers.
-	/// 
-	/// Useful for integrating StyleCop into custom build environments.
+	///		<para>
+	///		Command-line interface to StyleCop source code analyzers.
+	///		</para>
+	///		<para>
+	///		Useful for integrating StyleCop into custom build environments.
+	///		</para>
 	/// </summary>
 	public static class Program
 	{
@@ -95,6 +98,12 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Add C# project files to given list of projects.
 		/// </summary>
+		/// <param name="configuration">
+		/// Configuration containing flags to use during analysis.
+		/// </param>
+		/// <param name="projects">
+		/// List of projects to add C# project files to.
+		/// </param>
 		static void AddProjectFiles(Configuration configuration,
 			List<CodeProject> projects)
 		{
@@ -118,6 +127,16 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Add given C# project files to given list of projects.
 		/// </summary>
+		/// <param name="projectFiles">
+		/// Enumerable collection of CSharpProjectFile objects representing
+		/// C# project files to add.
+		/// </param>
+		/// <param name="configuration">
+		/// Configuration containing flags to use during analysis.
+		/// </param>
+		/// <param name="projects">
+		/// List of projects to add given C# project files to.
+		/// </param>
 		static void AddProjectFiles(IEnumerable<CSharpProjectFile> projectFiles,
 			Configuration configuration, List<CodeProject> projects)
 		{
@@ -138,6 +157,12 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Add Visual Studio solution files to given list of projects.
 		/// </summary>
+		/// <param name="configuration">
+		/// Configuration containing flags to use during analysis.
+		/// </param>
+		/// <param name="projects">
+		/// List of projects to add Visual Studio solution files to.
+		/// </param>
 		static void AddSolutionFiles(Configuration configuration,
 			List<CodeProject> projects)
 		{
@@ -220,6 +245,9 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Get header to print on help screen.
 		/// </summary>
+		/// <returns>
+		/// String representing header to print on help screen.
+		/// </returns>
 		static string GetHeader()
 		{
 			const char Space = ' ';
@@ -275,6 +303,9 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Main entry into program that supplies command-line arguments.
 		/// </summary>
+		/// <param name="arguments">
+		/// Array of strings representing command-line arguments.
+		/// </param>
 		static void Main(string[] arguments)
 		{
 			try
@@ -301,9 +332,13 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Initialize command-line argument parser and parse given
 		/// command-line arguments.
-		/// 
-		/// Return whether help should be printed.
 		/// </summary>
+		/// <param name="arguments">
+		/// Array of strings representing command-line arguments to parse.
+		/// </param>
+		/// <returns>
+		/// True if help should be printed, false otherwise.
+		/// </returns>
 		static bool ParseArguments(string[] arguments)
 		{
 			DefineSwitches();
@@ -339,6 +374,12 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Fired when output generated during analysis.
 		/// </summary>
+		/// <param name="sender">
+		/// Object representing source of event.
+		/// </param>
+		/// <param name="e">
+		/// OutputEventArgs representing output generated event data.
+		/// </param>
 		static void OnOutputGenerated(object sender, OutputEventArgs e)
 		{
 			Console.WriteLine(e.Output);
@@ -347,6 +388,12 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Fired when violation encountered in source code files being analyzed.
 		/// </summary>
+		/// <param name="sender">
+		/// Object representing source of event.
+		/// </param>
+		/// <param name="e">
+		/// ViolationEventArgs representing violation event data.
+		/// </param>
 		static void OnViolationEncountered(object sender, ViolationEventArgs e)
 		{
 			// Note: To be used for generating custom violation reports.
@@ -358,6 +405,9 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Get StyleCop console used for source code analysis.
 		/// </summary>
+		/// <value>
+		/// StyleCopConsole representing StyleCop console to use for analysis.
+		/// </value>
 		static StyleCopConsole Analyzer
 		{
 			get { return s_console; }
@@ -366,6 +416,9 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Get executing assembly.
 		/// </summary>
+		/// <value>
+		/// Assembly representing executing assembly.
+		/// </value>
 		static Assembly Assembly
 		{
 			get { return Assembly.GetExecutingAssembly(); }
@@ -374,14 +427,20 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Get executable name.
 		/// </summary>
+		/// <value>
+		/// String representing executable name.
+		/// </value>
 		static string ExecutableName
 		{
 			get { return Assembly.GetName().Name; }
 		}
 
 		/// <summary>
-		/// Get next unique key assigned to CodeProject object.
+		/// Get next unique key assigned to CodeProject objects.
 		/// </summary>
+		/// <value>
+		/// Integer representing unique key to assign to CodeProject objects.
+		/// </value>
 		static int NextProjectKey
 		{
 			get { return s_projectKey++; }
@@ -390,6 +449,9 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Get command-line argument parser.
 		/// </summary>
+		/// <value>
+		/// ArgumentParser representing command-line argument parser.
+		/// </value>
 		static ArgumentParser Parser
 		{
 			get { return s_parser; }
@@ -398,14 +460,21 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Get projects containing source code files to analyze.
 		/// </summary>
-		static CodeProject[] Projects
+		/// <value>
+		/// List of CodeProject objects containing source code files to analyze.
+		/// </value>
+		static IList<CodeProject> Projects
 		{
-			get { return s_projects.ToArray(); }
+			get { return s_projects; }
 		}
 
 		/// <summary>
 		/// Get expected switches to parse from command-line arguments.
 		/// </summary>
+		/// <value>
+		/// SwitchCollection containing expected switches to parse from
+		/// command-line arguments.
+		/// </value>
 		static SwitchCollection Switches
 		{
 			get { return s_switches; }
@@ -414,6 +483,9 @@ namespace StyleCopCLI
 		/// <summary>
 		/// Get executable version.
 		/// </summary>
+		/// <value>
+		/// String representing executable version.
+		/// </value>
 		static string Version
 		{
 			get { return Assembly.GetName().Version.ToString(); }

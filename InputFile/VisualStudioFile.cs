@@ -35,13 +35,25 @@ namespace StyleCopCLI.InputFile
 	/// </summary>
 	public abstract class VisualStudioFile
 	{
+		/// <summary>
+		/// File extension of Visual Studio file.
+		/// </summary>
 		string m_fileExtension;
 
+		/// <summary>
+		/// File path to Visual Studio file.
+		/// </summary>
 		string m_filePath;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
+		/// <param name="fileExtension">
+		/// String representing file extension of Visual Studio file.
+		/// </param>
+		/// <param name="filePath">
+		/// String representing file path to Visual Studio file.
+		/// </param>
 		protected VisualStudioFile(string fileExtension, string filePath)
 		{
 			m_fileExtension = fileExtension;
@@ -69,6 +81,12 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get full file path including given relative path.
 		/// </summary>
+		/// <param name="relativeFilePath">
+		/// String representing relative file path.
+		/// </param>
+		/// <returns>
+		/// String representing full file path.
+		/// </returns>
 		protected string GetFullFilePath(string relativeFilePath)
 		{
 			return DirectoryPath + Path.DirectorySeparatorChar + relativeFilePath;
@@ -108,6 +126,10 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get path to directory containing file.
 		/// </summary>
+		/// <value>
+		/// String representing path to directory containing this Visual Studio
+		/// file.
+		/// </value>
 		public string DirectoryPath
 		{
 			get { return Path.GetDirectoryName(FilePath); }
@@ -116,6 +138,9 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get file path.
 		/// </summary>
+		/// <value>
+		/// String representing path to this Visual Studio file.
+		/// </value>
 		public string FilePath
 		{
 			get { return m_filePath; }
@@ -127,6 +152,9 @@ namespace StyleCopCLI.InputFile
 		/// <summary>
 		/// Get file extension.
 		/// </summary>
+		/// <value>
+		/// String representing file extension of this Visual Studio file.
+		/// </value>
 		string FileExtension
 		{
 			get { return m_fileExtension; }
