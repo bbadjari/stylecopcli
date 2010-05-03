@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InputFile\CSharpProjectFile.cs" />
+    <Compile Include="InputFile\CSharpSourceFile.cs" />
     <Compile Include="InputFile\VisualStudioFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

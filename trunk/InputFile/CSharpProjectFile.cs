@@ -56,10 +56,9 @@ namespace StyleCopCLI.InputFile
 		const string NamespacePrefix = "msb";
 
 		/// <summary>
-		/// File extensions of project and source files.
+		/// File extension of project file.
 		/// </summary>
 		const string ProjectFileExtension = ".csproj";
-		const string SourceFileExtension = ".cs";
 
 		////////////////////////////////////////////////////////////////////////
 
@@ -69,9 +68,9 @@ namespace StyleCopCLI.InputFile
 		string m_projectName;
 
 		/// <summary>
-		/// C# source file paths contained in project file.
+		/// C# source files contained in project file.
 		/// </summary>
-		List<string> m_sourceFilePaths;
+		List<CSharpSourceFile> m_sourceFiles;
 
 		////////////////////////////////////////////////////////////////////////
 		// Constructors
@@ -100,7 +99,7 @@ namespace StyleCopCLI.InputFile
 			: base(ProjectFileExtension, filePath)
 		{
 			m_projectName = projectName;
-			m_sourceFilePaths = new List<string>();
+			m_sourceFiles = new List<CSharpSourceFile>();
 		}
 
 		////////////////////////////////////////////////////////////////////////
@@ -160,9 +159,11 @@ namespace StyleCopCLI.InputFile
 				string value = attribute.Value;
 
 				if (value != null &&
-					value.EndsWith(SourceFileExtension, StringComparison.OrdinalIgnoreCase))
+					value.EndsWith(CSharpSourceFile.FileExtension, StringComparison.OrdinalIgnoreCase))
 				{
-					m_sourceFilePaths.Add(GetFullFilePath(value));
+					CSharpSourceFile sourceFile = new CSharpSourceFile(GetFullFilePath(value));
+
+					m_sourceFiles.Add(sourceFile);
 				}
 			}
 		}
@@ -193,15 +194,15 @@ namespace StyleCopCLI.InputFile
 		}
 
 		/// <summary>
-		/// Get C# source file paths contained in this project file.
+		/// Get C# source files contained in this project file.
 		/// </summary>
 		/// <value>
-		/// Enumerable collection of strings representing paths to source files
-		/// referenced in project file.
+		/// Enumerable collection of CSharpSourceFile objects representing
+		/// C# source files referenced in project file.
 		/// </value>
-		public IEnumerable<string> SourceFilePaths
+		public IEnumerable<CSharpSourceFile> SourceFiles
 		{
-			get { return m_sourceFilePaths; }
+			get { return m_sourceFiles; }
 		}
 	}
 }
