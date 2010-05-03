@@ -58,6 +58,7 @@ namespace StyleCopCLI
 			public const string ProjectFiles = "proj";
 			public const string SettingsFile = "set";
 			public const string SolutionFiles = "sln";
+			public const string SourceFiles = "cs";
 		}
 
 		/// <summary>
@@ -142,13 +143,13 @@ namespace StyleCopCLI
 		{
 			foreach (CSharpProjectFile projectFile in projectFiles)
 			{
-				CodeProject project = new CodeProject(NextProjectKey,
-					projectFile.DirectoryPath, configuration);
+				CodeProject project = CreateNewProject(projectFile.DirectoryPath,
+					configuration);
 
 				projectFile.Load();
 
-				foreach (string filePath in projectFile.SourceFilePaths)
-					Analyzer.Core.Environment.AddSourceCode(project, filePath, null);
+				foreach (CSharpSourceFile sourceFile in projectFile.SourceFiles)
+					AddSourceFile(sourceFile, project);
 
 				projects.Add(project);
 			}
@@ -183,6 +184,54 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
+		/// Add C# source files to given list of projects.
+		/// </summary>
+		/// <param name="configuration">
+		/// Configuration containing flags to use during analysis.
+		/// </param>
+		/// <param name="projects">
+		/// List of projects to add C# source files to.
+		/// </param>
+		static void AddSourceFiles(Configuration configuration,
+			List<CodeProject> projects)
+		{
+			if (Parser.IsParsed(SwitchNames.SourceFiles))
+			{
+				string[] filePaths = Parser.GetValues(SwitchNames.SourceFiles);
+
+				foreach (string filePath in filePaths)
+				{
+					CSharpSourceFile sourceFile = new CSharpSourceFile(filePath);
+
+					CodeProject project = CreateNewProject(sourceFile.DirectoryPath,
+						configuration);
+
+					AddSourceFile(sourceFile, project);
+
+					projects.Add(project);
+				}
+			}
+		}
+
+		/// <summary>
+		/// Add given C# source file to given project.
+		/// </summary>
+		/// <param name="sourceFile">
+		/// CSharpSourceFile representing C# source file to add.
+		/// </param>
+		/// <param name="project">
+		/// Project to add C# source file to.
+		/// </param>
+		static void AddSourceFile(CSharpSourceFile sourceFile,
+			CodeProject project)
+		{
+			sourceFile.Load();
+
+			Analyzer.Core.Environment.AddSourceCode(project,
+				sourceFile.FilePath, null);
+		}
+
+		/// <summary>
 		/// Start source code analysis.
 		/// </summary>
 		static void Analyze()
@@ -195,6 +244,25 @@ namespace StyleCopCLI
 			Analyzer.ViolationEncountered -= OnViolationEncountered;
 
 			Analyzer.Dispose();
+		}
+
+		/// <summary>
+		/// Create new project given directory path and configuration.
+		/// </summary>
+		/// <param name="directoryPath">
+		/// String representing path to directory containing project source
+		/// files.
+		/// </param>
+		/// <param name="configuration">
+		/// Configuration containing flags to use during analysis.
+		/// </param>
+		/// <returns>
+		/// Project representing source files contained in common directory.
+		/// </returns>
+		static CodeProject CreateNewProject(string directoryPath,
+			Configuration configuration)
+		{
+			return new CodeProject(NextProjectKey, directoryPath, configuration);
 		}
 
 		/// <summary>
@@ -237,6 +305,13 @@ namespace StyleCopCLI
 			s_switches.Add(SwitchNames.SolutionFiles,
 				"solutionFiles",
 				"Visual Studio solution files to analyze.",
+				true,
+				false,
+				"filePaths");
+
+			s_switches.Add(SwitchNames.SourceFiles,
+				"sourceFiles",
+				"Visual C# source files to analyze.",
 				true,
 				false,
 				"filePaths");
@@ -292,9 +367,9 @@ namespace StyleCopCLI
 
 			s_projectKey = 0;
 
-			AddSolutionFiles(configuration, s_projects);
-
 			AddProjectFiles(configuration, s_projects);
+			AddSolutionFiles(configuration, s_projects);
+			AddSourceFiles(configuration, s_projects);
 
 			Analyzer.OutputGenerated += OnOutputGenerated;
 			Analyzer.ViolationEncountered += OnViolationEncountered;
@@ -348,7 +423,8 @@ namespace StyleCopCLI
 			s_parser.Parse();
 
 			if (s_parser.IsParsed(SwitchNames.Help) ||
-				s_parser.NoneParsed(SwitchNames.SolutionFiles, SwitchNames.ProjectFiles))
+				s_parser.NoneParsed(SwitchNames.ProjectFiles,
+				SwitchNames.SolutionFiles, SwitchNames.SourceFiles))
 			{
 				return true;
 			}
