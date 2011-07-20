@@ -55,7 +55,7 @@ namespace StyleCopCLI.InputFile
 				/// <summary>
 				/// Pattern used to match project name.
 				/// </summary>
-				const string Name = @"""(?<" + NameGroup + @">[\w]+)""";
+				const string Name = @"""(?<" + NameGroup + @">[\w\.]+)""";
 
 				/// <summary>
 				/// Group used to match project name.
