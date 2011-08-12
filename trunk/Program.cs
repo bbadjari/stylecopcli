@@ -33,7 +33,7 @@ using CSharpCLI.Argument;
 using CSharpCLI.Help;
 using CSharpCLI.Parse;
 using Microsoft.StyleCop;
-using StyleCopCLI.InputFile;
+using VSFile;
 
 namespace StyleCopCLI
 {
