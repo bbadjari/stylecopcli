@@ -291,7 +291,7 @@ namespace StyleCopCLI
 
 			s_switches.Add(SwitchNames.ProjectFiles,
 				"projectFiles",
-				"Visual C# project files to analyze.",
+				"Visual C# project (*.proj) files referencing Visual C# source files to analyze.",
 				true,
 				false,
 				"filePaths");
@@ -304,14 +304,14 @@ namespace StyleCopCLI
 
 			s_switches.Add(SwitchNames.SolutionFiles,
 				"solutionFiles",
-				"Visual Studio solution files to analyze.",
+				"Visual Studio solution (*.sln) files referencing Visual C# project files to analyze.",
 				true,
 				false,
 				"filePaths");
 
 			s_switches.Add(SwitchNames.SourceFiles,
 				"sourceFiles",
-				"Visual C# source files to analyze.",
+				"Visual C# source (*.cs) files to analyze.",
 				true,
 				false,
 				"filePaths");
