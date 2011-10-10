@@ -50,17 +50,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>References\CSharpCLI\CSharpCLI.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.StyleCop, Version=4.3.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\StyleCop\Microsoft.StyleCop.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.StyleCop.CSharp, Version=4.3.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\StyleCop\Microsoft.StyleCop.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.StyleCop.CSharp.Rules, Version=4.3.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>References\StyleCop\Microsoft.StyleCop.CSharp.Rules.dll</HintPath>
+    <Reference Include="StyleCop">
+      <HintPath>References\StyleCop\StyleCop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="VSFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">

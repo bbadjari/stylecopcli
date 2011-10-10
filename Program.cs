@@ -32,7 +32,7 @@ using System.Text;
 using CSharpCLI.Argument;
 using CSharpCLI.Help;
 using CSharpCLI.Parse;
-using Microsoft.StyleCop;
+using StyleCop;
 using VSFile;
 
 namespace StyleCopCLI
@@ -242,8 +242,6 @@ namespace StyleCopCLI
 
 			Analyzer.OutputGenerated -= OnOutputGenerated;
 			Analyzer.ViolationEncountered -= OnViolationEncountered;
-
-			Analyzer.Dispose();
 		}
 
 		/// <summary>
