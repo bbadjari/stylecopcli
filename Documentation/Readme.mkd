@@ -1,0 +1,151 @@
+﻿StyleCop CLI
+============
+
+Overview
+--------
+
+StyleCop is a tool initially developed by Microsoft that performs static code analysis on source code written in C# to determine whether the code conforms to a defined set of stylistic rules. These rules describe coding conventions and styles that can be enforced. Analysis results are output to an XML file that indicates which rules were violated. Developers can implement their own custom rules if the standard set of rules included with StyleCop does not meet their needs. In January 2010, StyleCop was made an open source project and is currently being hosted [here](http://stylecop.codeplex.com).
+
+StyleCop CLI is a software application written in C# that provides a command-line interface (CLI) to StyleCop source code analyzers, allowing StyleCop to be integrated as part of batch processes. Most notably, StyleCop CLI can be used by continuous integration (CI) tools that aim to include StyleCop analysis results as part of a continuous quality control process.
+
+Features
+--------
+
+- Analyze C# source files referenced in Visual Studio solutions.
+- Analyze C# source files referenced in C# projects.
+- Analyze individual C# source files.
+- Optionally provide StyleCop settings file to use during analysis.
+- Optionally provide configuration flags to use during analysis.
+- Optionally specify output file to write analysis results to.
+
+Requirements
+------------
+
+StyleCop CLI requires that the .NET Framework 4.0 is installed.
+
+Usage
+-----
+
+StyleCop CLI can be executed from the Windows Command Processor (a.k.a. the Command Prompt), from within Windows/DOS batch files or any other place CLI applications can be invoked. When executed without providing command-line arguments, usage information is displayed describing the supported commands:
+
+<table cellpadding="5">
+   <tr align="left">
+      <th>Command</th>
+      <th>Alternate Command</th>
+      <th>Description</th>
+   </tr>
+   <tr>
+      <td>-?</td>
+      <td>-help</td>
+      <td>Print help screen containing usage information.</td>
+   </tr>
+   <tr>
+      <td>-cs <i>&lt;filePaths&gt;</i></td>
+      <td>-sourceFiles <i>&lt;filePaths&gt;</i></td>
+      <td>Visual C# source (*.cs) files to analyze.</td>
+   </tr>
+   <tr>
+      <td>-flags <i>&lt;flags&gt;</i></td>
+      <td>-configurationFlags <i>&lt;flags&gt;</i></td>
+      <td>Configuration flags to use during analysis (e.g. DEBUG, RELEASE).</td>
+   </tr>
+   <tr>
+      <td>-out <i>&lt;filePath&gt;</i></td>
+      <td>-outputFile <i>&lt;filePath&gt;</i></td>
+      <td>Output file to write analysis results to.</td>
+   </tr>
+   <tr>
+      <td>-proj <i>&lt;filePaths&gt;</i></td>
+      <td>-projectFiles <i>&lt;filePaths&gt;</i></td>
+      <td>Visual C# project (*.proj) files referencing Visual C# source files to analyze.</td>
+   </tr>
+   <tr>
+      <td>-set <i>&lt;filePath&gt;</i></td>
+      <td>-settingsFile <i>&lt;filePath&gt;</i></td>
+      <td>StyleCop settings file to use during analysis.</td>
+   </tr>
+   <tr>
+      <td>-sln <i>&lt;filePaths&gt;</i></td>
+      <td>-solutionFiles <i>&lt;filePaths&gt;</i></td>
+      <td>Visual Studio solution (*.sln) files referencing Visual C# project files to analyze.</td>
+   </tr>
+</table>
+
+<i>&lt;filePath&gt;</i> specifies a path (absolute or relative) to a file.  
+<i>&lt;filePaths&gt;</i> specifies one or more paths (absolute or relative) to files.  
+<i>&lt;flags&gt;</i> specifies one or more configuration flags.
+
+### Examples ###
+
+Print help screen containing usage information:
+
+    StyleCopCLI -?
+
+Analyze `Fraction.cs`, a Visual C# source file:
+
+    StyleCopCLI -cs Fraction.cs
+
+Analyze multiple Visual C# source files:
+
+    StyleCopCLI -cs Fraction.cs C:\Projects\Program.cs
+
+Use the `DEBUG` configuration flag during analysis:
+
+    StyleCopCLI -cs Fraction.cs -flags DEBUG
+
+Use multiple configuration flags during analysis:
+
+    StyleCopCLI -cs Fraction.cs -flags DEBUG RELEASE
+
+Specify output file to write analysis results to:
+
+    StyleCopCLI -cs Fraction.cs -out FractionResults.xml
+
+Analyze `Data.proj`, a Visual C# project file referencing Visual C# source files:
+
+    StyleCopCLI -proj Data.proj
+
+Analyze multiple Visual C# project files:
+
+    StyleCopCLI -proj Data.proj C:\Projects\Services\Services.proj
+
+Specify StyleCop settings file to use during analysis:
+
+    StyleCopCLI -proj Services.proj -set Settings.StyleCop
+
+Analyze `Calculator.sln`, a Visual Studio solution file referencing Visual C# project files:
+
+    StyleCopCLI -sln Calculator.sln
+
+Analyze multiple Visual Studio solution files:
+
+    StyleCopCLI -sln Calculator.sln C:\Projects\ImageEditor.sln
+
+Releases
+--------
+
+The latest release of this software can be obtained from: <http://sourceforge.net/projects/stylecopcli>
+
+### 1.1 (1.1.0.0) - October 15, 2011 ###
+
+- Upgraded to StyleCop 4.6.3.0.
+- Extracted all files in `InputFile` namespace into separate library: VS File 1.0.0.0.
+- Upgraded to C# CLI 1.1.1.0.
+- Project names containing periods can now be used for analysis (Bug #3348879).
+- Upgraded solution and project to use Visual C# Express 2010 and .NET Framework 4.0.
+- Added ability to specify individual Visual C# source files for analysis.
+
+### 1.0 (1.0.0.0) - April 23, 2010 ###
+
+- Initial release.
+
+Copyright & License
+-------------------
+
+Copyright (c) 2010-2011 Bernard Badjari
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
