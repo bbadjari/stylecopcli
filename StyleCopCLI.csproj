@@ -53,6 +53,12 @@
     <Reference Include="StyleCop">
       <HintPath>References\StyleCop\StyleCop.dll</HintPath>
     </Reference>
+    <Reference Include="StyleCop.CSharp">
+      <HintPath>References\StyleCop\StyleCop.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="StyleCop.CSharp.Rules">
+      <HintPath>References\StyleCop\StyleCop.CSharp.Rules.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="VSFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
