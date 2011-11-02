@@ -138,7 +138,7 @@ The latest release of this software can be obtained from: <http://sourceforge.ne
 - Extracted all files in `InputFile` namespace into separate library: VS File 1.0.0.0.
 - Upgraded to C# CLI 1.1.1.0.
 - Project names containing periods can now be used for analysis (Bug #3348879).
-- Upgraded solution and project to use Visual C# Express 2010 and .NET Framework 4.0.
+- Upgraded solution and project to use Visual C# 2010 Express and .NET Framework 4.0.
 - Added ability to specify individual Visual C# source files for analysis.
 
 ### 1.0 (1.0.0.0) - April 23, 2010 ###
