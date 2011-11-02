@@ -1,6 +1,13 @@
 ﻿Releases
 ========
 
+1.1.1 (1.1.1.0) - November 1, 2011
+----------------------------------
+
+- Non-C# project files are now skipped when reading solution files in SolutionFile class (Bug #3348878).
+- Upgraded to VS File 1.0.1.0.
+- Added missing StyleCop 4.6.3.0 assemblies.
+
 1.1 (1.1.0.0) - October 15, 2011
 --------------------------------
 
