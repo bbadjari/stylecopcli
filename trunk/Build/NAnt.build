@@ -2,16 +2,19 @@
 <project name="StyleCop CLI" default="build" basedir="..\">
 	<description>NAnt build file for the StyleCop CLI application.</description>
 
+	<property name="package.directory" value="." overwrite="false" />
 	<property name="release.directory" value="bin\Release\" readonly="true" />
-	<property name="assembly.file.path" value="${release.directory}StyleCopCLI.exe" readonly="true" />
+	<property name="assembly.file.path" value="${release.directory}\StyleCopCLI.exe" readonly="true" />
 	<property name="version" value="${assemblyname::get-version(assemblyname::get-assembly-name(assembly.file.path))}" dynamic="true" readonly="true" />
 
 	<target name="build" description="Build solution in 'Release' configuration.">
 		<solution configuration="Release" solutionfile="StyleCopCLI.sln" />
 	</target>
 
+	<target name="package" depends="package.binary, package.source" description="Package binary and source files separately for release." />
+
 	<target name="package.binary" depends="build" description="Package binary files for release.">
-		<zip zipfile="stylecopcli_${version}_bin.zip">
+		<zip zipfile="${package.directory}\stylecopcli_${version}_bin.zip">
 			<fileset basedir="${release.directory}">
 				<include name="*" />
 				<include name="..\..\Documentation\*.mkd" />
@@ -20,8 +23,8 @@
 		</zip>
 	</target>
 
-	<target name="package.source" description="Package source files for release.">
-		<zip zipfile="stylecopcli_${version}_src.zip">
+	<target name="package.source" depends="build" description="Package source files for release.">
+		<zip zipfile="${package.directory}\stylecopcli_${version}_src.zip">
 			<fileset>
 				<include name="Build\*.build" />
 				<include name="Documentation\*.mkd" />
