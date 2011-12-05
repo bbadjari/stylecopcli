@@ -34,6 +34,8 @@ using CSharpCLI.Help;
 using CSharpCLI.Parse;
 using StyleCop;
 using VSFile;
+using VSFile.Project;
+using VSFile.Source;
 
 namespace StyleCopCLI
 {
@@ -177,7 +179,7 @@ namespace StyleCopCLI
 
 					solutionFile.Load();
 
-					AddProjectFiles(solutionFile.ProjectFiles, configuration,
+					AddProjectFiles(solutionFile.CSharpProjectFiles, configuration,
 						codeProjects);
 				}
 			}
