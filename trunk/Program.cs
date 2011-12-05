@@ -69,6 +69,16 @@ namespace StyleCopCLI
 		////////////////////////////////////////////////////////////////////////
 
 		/// <summary>
+		/// Unique key assigned to each CodeProject object.
+		/// </summary>
+		static int s_codeProjectKey;
+
+		/// <summary>
+		/// Code projects containing source code files to analyze.
+		/// </summary>
+		static List<CodeProject> s_codeProjects;
+
+		/// <summary>
 		/// StyleCop console used for source code analysis.
 		/// </summary>
 		static StyleCopConsole s_console;
@@ -79,16 +89,6 @@ namespace StyleCopCLI
 		static ArgumentParser s_parser;
 
 		/// <summary>
-		/// Unique key assigned to each CodeProject object.
-		/// </summary>
-		static int s_projectKey;
-
-		/// <summary>
-		/// Projects containing source code files to analyze.
-		/// </summary>
-		static List<CodeProject> s_projects;
-
-		/// <summary>
 		/// Expected switches to parse from command-line arguments.
 		/// </summary>
 		static SwitchCollection s_switches;
@@ -97,16 +97,16 @@ namespace StyleCopCLI
 		// Methods
 
 		/// <summary>
-		/// Add C# project files to given list of projects.
+		/// Add Visual C# project files to given list of projects.
 		/// </summary>
 		/// <param name="configuration">
 		/// Configuration containing flags to use during analysis.
 		/// </param>
-		/// <param name="projects">
-		/// List of projects to add C# project files to.
+		/// <param name="codeProjects">
+		/// List of code projects to add Visual C# project files to.
 		/// </param>
 		static void AddProjectFiles(Configuration configuration,
-			List<CodeProject> projects)
+			List<CodeProject> codeProjects)
 		{
 			if (Parser.IsParsed(SwitchNames.ProjectFiles))
 			{
@@ -121,37 +121,37 @@ namespace StyleCopCLI
 					projectFiles.Add(projectFile);
 				}
 
-				AddProjectFiles(projectFiles, configuration, projects);
+				AddProjectFiles(projectFiles, configuration, codeProjects);
 			}
 		}
 
 		/// <summary>
-		/// Add given C# project files to given list of projects.
+		/// Add given Visual C# project files to given list of projects.
 		/// </summary>
 		/// <param name="projectFiles">
 		/// Enumerable collection of CSharpProjectFile objects representing
-		/// C# project files to add.
+		/// Visual C# project files to add.
 		/// </param>
 		/// <param name="configuration">
 		/// Configuration containing flags to use during analysis.
 		/// </param>
-		/// <param name="projects">
-		/// List of projects to add given C# project files to.
+		/// <param name="codeProjects">
+		/// List of code projects to add given Visual C# project files to.
 		/// </param>
 		static void AddProjectFiles(IEnumerable<CSharpProjectFile> projectFiles,
-			Configuration configuration, List<CodeProject> projects)
+			Configuration configuration, List<CodeProject> codeProjects)
 		{
 			foreach (CSharpProjectFile projectFile in projectFiles)
 			{
-				CodeProject project = CreateNewProject(projectFile.DirectoryPath,
+				CodeProject codeProject = CreateCodeProject(projectFile.DirectoryPath,
 					configuration);
 
 				projectFile.Load();
 
 				foreach (CSharpSourceFile sourceFile in projectFile.SourceFiles)
-					AddSourceFile(sourceFile, project);
+					AddSourceFile(sourceFile, codeProject);
 
-				projects.Add(project);
+				codeProjects.Add(codeProject);
 			}
 		}
 
@@ -161,11 +161,11 @@ namespace StyleCopCLI
 		/// <param name="configuration">
 		/// Configuration containing flags to use during analysis.
 		/// </param>
-		/// <param name="projects">
-		/// List of projects to add Visual Studio solution files to.
+		/// <param name="codeProjects">
+		/// List of code projects to add Visual Studio solution files to.
 		/// </param>
 		static void AddSolutionFiles(Configuration configuration,
-			List<CodeProject> projects)
+			List<CodeProject> codeProjects)
 		{
 			if (Parser.IsParsed(SwitchNames.SolutionFiles))
 			{
@@ -178,22 +178,40 @@ namespace StyleCopCLI
 					solutionFile.Load();
 
 					AddProjectFiles(solutionFile.ProjectFiles, configuration,
-						projects);
+						codeProjects);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Add C# source files to given list of projects.
+		/// Add given Visual C# source file to given project.
+		/// </summary>
+		/// <param name="sourceFile">
+		/// CSharpSourceFile representing Visual C# source file to add.
+		/// </param>
+		/// <param name="codeProject">
+		/// Code project to add Visual C# source file to.
+		/// </param>
+		static void AddSourceFile(CSharpSourceFile sourceFile,
+			CodeProject codeProject)
+		{
+			sourceFile.Load();
+
+			Analyzer.Core.Environment.AddSourceCode(codeProject,
+				sourceFile.FilePath, null);
+		}
+
+		/// <summary>
+		/// Add Visual C# source files to given list of projects.
 		/// </summary>
 		/// <param name="configuration">
 		/// Configuration containing flags to use during analysis.
 		/// </param>
-		/// <param name="projects">
-		/// List of projects to add C# source files to.
+		/// <param name="codeProjects">
+		/// List of code projects to add Visual C# source files to.
 		/// </param>
 		static void AddSourceFiles(Configuration configuration,
-			List<CodeProject> projects)
+			List<CodeProject> codeProjects)
 		{
 			if (Parser.IsParsed(SwitchNames.SourceFiles))
 			{
@@ -203,32 +221,14 @@ namespace StyleCopCLI
 				{
 					CSharpSourceFile sourceFile = new CSharpSourceFile(filePath);
 
-					CodeProject project = CreateNewProject(sourceFile.DirectoryPath,
+					CodeProject codeProject = CreateCodeProject(sourceFile.DirectoryPath,
 						configuration);
 
-					AddSourceFile(sourceFile, project);
+					AddSourceFile(sourceFile, codeProject);
 
-					projects.Add(project);
+					codeProjects.Add(codeProject);
 				}
 			}
-		}
-
-		/// <summary>
-		/// Add given C# source file to given project.
-		/// </summary>
-		/// <param name="sourceFile">
-		/// CSharpSourceFile representing C# source file to add.
-		/// </param>
-		/// <param name="project">
-		/// Project to add C# source file to.
-		/// </param>
-		static void AddSourceFile(CSharpSourceFile sourceFile,
-			CodeProject project)
-		{
-			sourceFile.Load();
-
-			Analyzer.Core.Environment.AddSourceCode(project,
-				sourceFile.FilePath, null);
 		}
 
 		/// <summary>
@@ -236,7 +236,7 @@ namespace StyleCopCLI
 		/// </summary>
 		static void Analyze()
 		{
-			Analyzer.Start(Projects, true);
+			Analyzer.Start(CodeProjects, true);
 
 			// Clean up console.
 
@@ -245,22 +245,22 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
-		/// Create new project given directory path and configuration.
+		/// Create code project given directory path and configuration.
 		/// </summary>
 		/// <param name="directoryPath">
-		/// String representing path to directory containing project source
+		/// String representing path to directory containing code project source
 		/// files.
 		/// </param>
 		/// <param name="configuration">
 		/// Configuration containing flags to use during analysis.
 		/// </param>
 		/// <returns>
-		/// Project representing source files contained in common directory.
+		/// Code project representing source files contained in common directory.
 		/// </returns>
-		static CodeProject CreateNewProject(string directoryPath,
+		static CodeProject CreateCodeProject(string directoryPath,
 			Configuration configuration)
 		{
-			return new CodeProject(NextProjectKey, directoryPath, configuration);
+			return new CodeProject(NextCodeProjectKey, directoryPath, configuration);
 		}
 
 		/// <summary>
@@ -289,7 +289,7 @@ namespace StyleCopCLI
 
 			s_switches.Add(SwitchNames.ProjectFiles,
 				"projectFiles",
-				"Visual C# project (*.proj) files referencing Visual C# source files to analyze.",
+				"Visual C# project (*.csproj) files referencing Visual C# source files to analyze.",
 				true,
 				false,
 				"filePaths");
@@ -361,13 +361,13 @@ namespace StyleCopCLI
 				configuration = new Configuration(flags);
 			}
 
-			s_projects = new List<CodeProject>();
+			s_codeProjects = new List<CodeProject>();
 
-			s_projectKey = 0;
+			s_codeProjectKey = 0;
 
-			AddProjectFiles(configuration, s_projects);
-			AddSolutionFiles(configuration, s_projects);
-			AddSourceFiles(configuration, s_projects);
+			AddProjectFiles(configuration, s_codeProjects);
+			AddSolutionFiles(configuration, s_codeProjects);
+			AddSourceFiles(configuration, s_codeProjects);
 
 			Analyzer.OutputGenerated += OnOutputGenerated;
 			Analyzer.ViolationEncountered += OnViolationEncountered;
@@ -499,6 +499,17 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
+		/// Get code projects containing source code files to analyze.
+		/// </summary>
+		/// <value>
+		/// List of CodeProject objects containing source code files to analyze.
+		/// </value>
+		static IList<CodeProject> CodeProjects
+		{
+			get { return s_codeProjects; }
+		}
+
+		/// <summary>
 		/// Get executable name.
 		/// </summary>
 		/// <value>
@@ -515,9 +526,9 @@ namespace StyleCopCLI
 		/// <value>
 		/// Integer representing unique key to assign to CodeProject objects.
 		/// </value>
-		static int NextProjectKey
+		static int NextCodeProjectKey
 		{
-			get { return s_projectKey++; }
+			get { return s_codeProjectKey++; }
 		}
 
 		/// <summary>
@@ -529,17 +540,6 @@ namespace StyleCopCLI
 		static ArgumentParser Parser
 		{
 			get { return s_parser; }
-		}
-
-		/// <summary>
-		/// Get projects containing source code files to analyze.
-		/// </summary>
-		/// <value>
-		/// List of CodeProject objects containing source code files to analyze.
-		/// </value>
-		static IList<CodeProject> Projects
-		{
-			get { return s_projects; }
 		}
 
 		/// <summary>
