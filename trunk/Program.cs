@@ -58,6 +58,7 @@ namespace StyleCopCLI
 			public const string Help = "?";
 			public const string OutputFile = "out";
 			public const string ProjectFiles = "proj";
+			public const string RecursiveSearch = "r";
 			public const string SettingsFile = "set";
 			public const string SolutionFiles = "sln";
 			public const string SourceFiles = "cs";
@@ -114,16 +115,9 @@ namespace StyleCopCLI
 			{
 				string[] filePaths = Parser.GetValues(SwitchNames.ProjectFiles);
 
-				List<CSharpProjectFile> projectFiles = new List<CSharpProjectFile>();
+				VisualStudioFiles files = new VisualStudioFiles(filePaths, RecursiveSearch);
 
-				foreach (string filePath in filePaths)
-				{
-					CSharpProjectFile projectFile = new CSharpProjectFile(filePath);
-
-					projectFiles.Add(projectFile);
-				}
-
-				AddProjectFiles(projectFiles, configuration, codeProjects);
+				AddProjectFiles(files.CSharpProjectFiles, configuration, codeProjects);
 			}
 		}
 
@@ -173,10 +167,10 @@ namespace StyleCopCLI
 			{
 				string[] filePaths = Parser.GetValues(SwitchNames.SolutionFiles);
 
-				foreach (string filePath in filePaths)
-				{
-					SolutionFile solutionFile = new SolutionFile(filePath);
+				VisualStudioFiles files = new VisualStudioFiles(filePaths, RecursiveSearch);
 
+				foreach (SolutionFile solutionFile in files.SolutionFiles)
+				{
 					solutionFile.Load();
 
 					AddProjectFiles(solutionFile.CSharpProjectFiles, configuration,
@@ -219,10 +213,10 @@ namespace StyleCopCLI
 			{
 				string[] filePaths = Parser.GetValues(SwitchNames.SourceFiles);
 
-				foreach (string filePath in filePaths)
-				{
-					CSharpSourceFile sourceFile = new CSharpSourceFile(filePath);
+				VisualStudioFiles files = new VisualStudioFiles(filePaths, RecursiveSearch);
 
+				foreach (CSharpSourceFile sourceFile in files.CSharpSourceFiles)
+				{
 					CodeProject codeProject = CreateCodeProject(sourceFile.DirectoryPath,
 						configuration);
 
@@ -295,6 +289,10 @@ namespace StyleCopCLI
 				true,
 				false,
 				"filePaths");
+
+			s_switches.Add(SwitchNames.RecursiveSearch,
+				"recursiveSearch",
+				"Recursively search for files to analyze.");
 
 			s_switches.Add(SwitchNames.SettingsFile,
 				"settingsFile",
@@ -542,6 +540,17 @@ namespace StyleCopCLI
 		static ArgumentParser Parser
 		{
 			get { return s_parser; }
+		}
+
+		/// <summary>
+		/// Determine if recursive search of files to analyze specified.
+		/// </summary>
+		/// <value>
+		/// True if recursive search specified, false otherwise.
+		/// </value>
+		static bool RecursiveSearch
+		{
+			get { return Parser.IsParsed(SwitchNames.RecursiveSearch); }
 		}
 
 		/// <summary>
