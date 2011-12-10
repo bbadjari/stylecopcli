@@ -11,12 +11,13 @@ StyleCop CLI is a software application written in C# that provides a command-lin
 Features
 --------
 
-- Analyze C# source files referenced in Visual Studio solutions.
-- Analyze C# source files referenced in C# projects.
-- Analyze individual C# source files.
-- Optionally provide StyleCop settings file to use during analysis.
-- Optionally provide configuration flags to use during analysis.
-- Optionally specify output file to write analysis results to.
+- Analyze Visual C# source files referenced in Visual Studio solutions.
+- Analyze Visual C# source files referenced in Visual C# projects.
+- Analyze individual Visual C# source files.
+- Recursively search subdirectories for files to analyze.
+- Specify StyleCop settings file to use during analysis.
+- Specify configuration flags to use during analysis.
+- Specify output file to write analysis results to.
 
 Requirements
 ------------
@@ -57,7 +58,12 @@ StyleCop CLI can be executed from the Windows Command Processor (a.k.a. the Comm
    <tr>
       <td>-proj <i>&lt;filePaths&gt;</i></td>
       <td>-projectFiles <i>&lt;filePaths&gt;</i></td>
-      <td>Visual C# project (*.proj) files referencing Visual C# source files to analyze.</td>
+      <td>Visual C# project (*.csproj) files referencing Visual C# source files to analyze.</td>
+   </tr>
+   <tr>
+      <td>-r</td>
+      <td>-recursiveSearch</td>
+      <td>Recursively search subdirectories for files to analyze.</td>
    </tr>
    <tr>
       <td>-set <i>&lt;filePath&gt;</i></td>
@@ -72,7 +78,7 @@ StyleCop CLI can be executed from the Windows Command Processor (a.k.a. the Comm
 </table>
 
 <i>&lt;filePath&gt;</i> specifies a path (absolute or relative) to a file.  
-<i>&lt;filePaths&gt;</i> specifies one or more paths (absolute or relative) to files.  
+<i>&lt;filePaths&gt;</i> specifies one or more paths (absolute or relative) to files. File names can include wildcard characters (* or ?).  
 <i>&lt;flags&gt;</i> specifies one or more configuration flags.
 
 ### Examples ###
@@ -101,17 +107,21 @@ Specify output file to write analysis results to:
 
     StyleCopCLI -cs Fraction.cs -out FractionResults.xml
 
-Analyze `Data.proj`, a Visual C# project file referencing Visual C# source files:
+Analyze `Data.csproj`, a Visual C# project file referencing Visual C# source files:
 
-    StyleCopCLI -proj Data.proj
+    StyleCopCLI -proj Data.csproj
 
 Analyze multiple Visual C# project files:
 
-    StyleCopCLI -proj Data.proj C:\Projects\Services\Services.proj
+    StyleCopCLI -proj Data.csproj C:\Projects\Services\Services.csproj
+
+Analyze wildcard Visual C# project files and recursively search subdirectories:
+
+    StyleCopCLI -proj C:\Projects\*.csproj -r
 
 Specify StyleCop settings file to use during analysis:
 
-    StyleCopCLI -proj Services.proj -set Settings.StyleCop
+    StyleCopCLI -proj Services.csproj -set Settings.StyleCop
 
 Analyze `Calculator.sln`, a Visual Studio solution file referencing Visual C# project files:
 
