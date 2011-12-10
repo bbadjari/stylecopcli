@@ -292,7 +292,7 @@ namespace StyleCopCLI
 
 			s_switches.Add(SwitchNames.RecursiveSearch,
 				"recursiveSearch",
-				"Recursively search for files to analyze.");
+				"Recursively search subdirectories for files to analyze.");
 
 			s_switches.Add(SwitchNames.SettingsFile,
 				"settingsFile",
