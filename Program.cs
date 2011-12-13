@@ -33,6 +33,7 @@ using CSharpCLI.Argument;
 using CSharpCLI.Help;
 using CSharpCLI.Parse;
 using StyleCop;
+using StyleCopCLI.Properties;
 using VSFile;
 using VSFile.Project;
 using VSFile.Source;
@@ -232,6 +233,14 @@ namespace StyleCopCLI
 		/// </summary>
 		static void Analyze()
 		{
+			// Determine if no source code files to analyze.
+			if (!HasCodeProjects)
+			{
+				Console.WriteLine(Resources.NoFilesToAnalyze);
+
+				return;
+			}
+
 			Analyzer.Start(CodeProjects, true);
 
 			// Clean up console.
@@ -369,8 +378,11 @@ namespace StyleCopCLI
 			AddSolutionFiles(configuration, s_codeProjects);
 			AddSourceFiles(configuration, s_codeProjects);
 
-			Analyzer.OutputGenerated += OnOutputGenerated;
-			Analyzer.ViolationEncountered += OnViolationEncountered;
+			if (HasCodeProjects)
+			{
+				Analyzer.OutputGenerated += OnOutputGenerated;
+				Analyzer.ViolationEncountered += OnViolationEncountered;
+			}
 		}
 
 		/// <summary>
@@ -518,6 +530,18 @@ namespace StyleCopCLI
 		static string ExecutableName
 		{
 			get { return Assembly.GetName().Name; }
+		}
+
+		/// <summary>
+		/// Determine if any code projects exist containing source code files
+		/// to analyze.
+		/// </summary>
+		/// <value>
+		/// True if any code projects exist, false otherwise.
+		/// </value>
+		static bool HasCodeProjects
+		{
+			get { return CodeProjects != null && CodeProjects.Count > 0; }
 		}
 
 		/// <summary>
