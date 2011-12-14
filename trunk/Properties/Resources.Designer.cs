@@ -61,11 +61,209 @@ namespace StyleCopCLI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to flags.
+        /// </summary>
+        internal static string ConfigurationFlagsSwitchArgumentName {
+            get {
+                return ResourceManager.GetString("ConfigurationFlagsSwitchArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration flags to use during analysis (e.g. DEBUG, RELEASE)..
+        /// </summary>
+        internal static string ConfigurationFlagsSwitchDescription {
+            get {
+                return ResourceManager.GetString("ConfigurationFlagsSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to configurationFlags.
+        /// </summary>
+        internal static string ConfigurationFlagsSwitchLongName {
+            get {
+                return ResourceManager.GetString("ConfigurationFlagsSwitchLongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print this help screen..
+        /// </summary>
+        internal static string HelpSwitchDescription {
+            get {
+                return ResourceManager.GetString("HelpSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to help.
+        /// </summary>
+        internal static string HelpSwitchLongName {
+            get {
+                return ResourceManager.GetString("HelpSwitchLongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No source code files to analyze..
         /// </summary>
         internal static string NoFilesToAnalyze {
             get {
                 return ResourceManager.GetString("NoFilesToAnalyze", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to filePath.
+        /// </summary>
+        internal static string OutputFileSwitchArgumentName {
+            get {
+                return ResourceManager.GetString("OutputFileSwitchArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output file to write analysis results to..
+        /// </summary>
+        internal static string OutputFileSwitchDescription {
+            get {
+                return ResourceManager.GetString("OutputFileSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to outputFile.
+        /// </summary>
+        internal static string OutputFileSwitchLongName {
+            get {
+                return ResourceManager.GetString("OutputFileSwitchLongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to filePaths.
+        /// </summary>
+        internal static string ProjectFilesSwitchArgumentName {
+            get {
+                return ResourceManager.GetString("ProjectFilesSwitchArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visual C# project (*.csproj) files referencing Visual C# source files to analyze..
+        /// </summary>
+        internal static string ProjectFilesSwitchDescription {
+            get {
+                return ResourceManager.GetString("ProjectFilesSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to projectFiles.
+        /// </summary>
+        internal static string ProjectFilesSwitchLongName {
+            get {
+                return ResourceManager.GetString("ProjectFilesSwitchLongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recursively search subdirectories for files to analyze..
+        /// </summary>
+        internal static string RecursiveSearchSwitchDescription {
+            get {
+                return ResourceManager.GetString("RecursiveSearchSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to recursiveSearch.
+        /// </summary>
+        internal static string RecursiveSearchSwitchLongName {
+            get {
+                return ResourceManager.GetString("RecursiveSearchSwitchLongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to filePath.
+        /// </summary>
+        internal static string SettingsFileSwitchArgumentName {
+            get {
+                return ResourceManager.GetString("SettingsFileSwitchArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StyleCop settings file to use during analysis..
+        /// </summary>
+        internal static string SettingsFileSwitchDescription {
+            get {
+                return ResourceManager.GetString("SettingsFileSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settingsFile.
+        /// </summary>
+        internal static string SettingsFileSwitchLongName {
+            get {
+                return ResourceManager.GetString("SettingsFileSwitchLongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to filePaths.
+        /// </summary>
+        internal static string SolutionFilesSwitchArgumentName {
+            get {
+                return ResourceManager.GetString("SolutionFilesSwitchArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visual Studio solution (*.sln) files referencing Visual C# project files to analyze..
+        /// </summary>
+        internal static string SolutionFilesSwitchDescription {
+            get {
+                return ResourceManager.GetString("SolutionFilesSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to solutionFiles.
+        /// </summary>
+        internal static string SolutionFilesSwitchLongName {
+            get {
+                return ResourceManager.GetString("SolutionFilesSwitchLongName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to filePaths.
+        /// </summary>
+        internal static string SourceFilesSwitchArgumentName {
+            get {
+                return ResourceManager.GetString("SourceFilesSwitchArgumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visual C# source (*.cs) files to analyze..
+        /// </summary>
+        internal static string SourceFilesSwitchDescription {
+            get {
+                return ResourceManager.GetString("SourceFilesSwitchDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sourceFiles.
+        /// </summary>
+        internal static string SourceFilesSwitchLongName {
+            get {
+                return ResourceManager.GetString("SourceFilesSwitchLongName", resourceCulture);
             }
         }
     }

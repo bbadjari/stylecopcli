@@ -117,7 +117,73 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConfigurationFlagsSwitchArgumentName" xml:space="preserve">
+    <value>flags</value>
+  </data>
+  <data name="ConfigurationFlagsSwitchDescription" xml:space="preserve">
+    <value>Configuration flags to use during analysis (e.g. DEBUG, RELEASE).</value>
+  </data>
+  <data name="ConfigurationFlagsSwitchLongName" xml:space="preserve">
+    <value>configurationFlags</value>
+  </data>
+  <data name="HelpSwitchDescription" xml:space="preserve">
+    <value>Print this help screen.</value>
+  </data>
+  <data name="HelpSwitchLongName" xml:space="preserve">
+    <value>help</value>
+  </data>
   <data name="NoFilesToAnalyze" xml:space="preserve">
     <value>No source code files to analyze.</value>
+  </data>
+  <data name="OutputFileSwitchArgumentName" xml:space="preserve">
+    <value>filePath</value>
+  </data>
+  <data name="OutputFileSwitchDescription" xml:space="preserve">
+    <value>Output file to write analysis results to.</value>
+  </data>
+  <data name="OutputFileSwitchLongName" xml:space="preserve">
+    <value>outputFile</value>
+  </data>
+  <data name="ProjectFilesSwitchArgumentName" xml:space="preserve">
+    <value>filePaths</value>
+  </data>
+  <data name="ProjectFilesSwitchDescription" xml:space="preserve">
+    <value>Visual C# project (*.csproj) files referencing Visual C# source files to analyze.</value>
+  </data>
+  <data name="ProjectFilesSwitchLongName" xml:space="preserve">
+    <value>projectFiles</value>
+  </data>
+  <data name="RecursiveSearchSwitchDescription" xml:space="preserve">
+    <value>Recursively search subdirectories for files to analyze.</value>
+  </data>
+  <data name="RecursiveSearchSwitchLongName" xml:space="preserve">
+    <value>recursiveSearch</value>
+  </data>
+  <data name="SettingsFileSwitchArgumentName" xml:space="preserve">
+    <value>filePath</value>
+  </data>
+  <data name="SettingsFileSwitchDescription" xml:space="preserve">
+    <value>StyleCop settings file to use during analysis.</value>
+  </data>
+  <data name="SettingsFileSwitchLongName" xml:space="preserve">
+    <value>settingsFile</value>
+  </data>
+  <data name="SolutionFilesSwitchArgumentName" xml:space="preserve">
+    <value>filePaths</value>
+  </data>
+  <data name="SolutionFilesSwitchDescription" xml:space="preserve">
+    <value>Visual Studio solution (*.sln) files referencing Visual C# project files to analyze.</value>
+  </data>
+  <data name="SolutionFilesSwitchLongName" xml:space="preserve">
+    <value>solutionFiles</value>
+  </data>
+  <data name="SourceFilesSwitchArgumentName" xml:space="preserve">
+    <value>filePaths</value>
+  </data>
+  <data name="SourceFilesSwitchDescription" xml:space="preserve">
+    <value>Visual C# source (*.cs) files to analyze.</value>
+  </data>
+  <data name="SourceFilesSwitchLongName" xml:space="preserve">
+    <value>sourceFiles</value>
   </data>
 </root>
