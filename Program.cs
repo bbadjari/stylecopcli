@@ -276,52 +276,52 @@ namespace StyleCopCLI
 			s_switches = new SwitchCollection();
 
 			s_switches.Add(SwitchNames.Help,
-				"help",
-				"Print this help screen.");
+				Resources.HelpSwitchLongName,
+				Resources.HelpSwitchDescription);
 
 			s_switches.Add(SwitchNames.ConfigurationFlags,
-				"configurationFlags",
-				"Configuration flags to use during analysis (e.g. DEBUG, RELEASE).",
+				Resources.ConfigurationFlagsSwitchLongName,
+				Resources.ConfigurationFlagsSwitchDescription,
 				true,
 				false,
-				"flags");
+				Resources.ConfigurationFlagsSwitchArgumentName);
 
 			s_switches.Add(SwitchNames.OutputFile,
-				"outputFile",
-				"Output file to write analysis results to.",
+				Resources.OutputFileSwitchLongName,
+				Resources.OutputFileSwitchDescription,
 				false,
-				"filePath");
+				Resources.OutputFileSwitchArgumentName);
 
 			s_switches.Add(SwitchNames.ProjectFiles,
-				"projectFiles",
-				"Visual C# project (*.csproj) files referencing Visual C# source files to analyze.",
+				Resources.ProjectFilesSwitchLongName,
+				Resources.ProjectFilesSwitchDescription,
 				true,
 				false,
-				"filePaths");
+				Resources.ProjectFilesSwitchArgumentName);
 
 			s_switches.Add(SwitchNames.RecursiveSearch,
-				"recursiveSearch",
-				"Recursively search subdirectories for files to analyze.");
+				Resources.RecursiveSearchSwitchLongName,
+				Resources.RecursiveSearchSwitchDescription);
 
 			s_switches.Add(SwitchNames.SettingsFile,
-				"settingsFile",
-				"StyleCop settings file to use during analysis.",
+				Resources.SettingsFileSwitchLongName,
+				Resources.SettingsFileSwitchDescription,
 				false,
-				"filePath");
+				Resources.SettingsFileSwitchArgumentName);
 
 			s_switches.Add(SwitchNames.SolutionFiles,
-				"solutionFiles",
-				"Visual Studio solution (*.sln) files referencing Visual C# project files to analyze.",
+				Resources.SolutionFilesSwitchLongName,
+				Resources.SolutionFilesSwitchDescription,
 				true,
 				false,
-				"filePaths");
+				Resources.SolutionFilesSwitchArgumentName);
 
 			s_switches.Add(SwitchNames.SourceFiles,
-				"sourceFiles",
-				"Visual C# source (*.cs) files to analyze.",
+				Resources.SourceFilesSwitchLongName,
+				Resources.SourceFilesSwitchDescription,
 				true,
 				false,
-				"filePaths");
+				Resources.SourceFilesSwitchArgumentName);
 		}
 
 		/// <summary>
