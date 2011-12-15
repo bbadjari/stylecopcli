@@ -136,6 +136,13 @@ Releases
 
 The latest release of this software can be obtained from: <http://sourceforge.net/projects/stylecopcli>
 
+### 1.2 (1.2.0.0) - December 14, 2011 ###
+
+- User now informed if no source code files to analyze. This can occur when specifying file names using wildcard characters and no matches found.
+- Added ability to use wildcard characters in place of file names and recursively search subdirectories for files to analyze.
+- Upgraded to VS File 1.1.2.0.
+- Added NAnt build file.
+
 ### 1.1.1 (1.1.1.0) - November 1, 2011 ###
 
 - Non-C# project files are now skipped when reading solution files in `SolutionFile` class (Bug #3348878).
