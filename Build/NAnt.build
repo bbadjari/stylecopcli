@@ -29,6 +29,7 @@
 				<include name="Build\*.build" />
 				<include name="Documentation\*.mkd" />
 				<include name="Properties\*.cs" />
+				<include name="Properties\*.resx" />
 				<include name="References\CSharpCLI\*.dll" />
 				<include name="References\StyleCop\*.dll" />
 				<include name="References\VSFile\*.dll" />
