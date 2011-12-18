@@ -83,6 +83,11 @@ namespace StyleCopCLI
 		static List<CodeProject> s_codeProjects;
 
 		/// <summary>
+		/// Configuration containing flags to use during analysis.
+		/// </summary>
+		static Configuration s_configuration;
+
+		/// <summary>
 		/// StyleCop console used for source code analysis.
 		/// </summary>
 		static StyleCopConsole s_console;
@@ -101,16 +106,9 @@ namespace StyleCopCLI
 		// Methods
 
 		/// <summary>
-		/// Add Visual C# project files to given list of projects.
+		/// Add Visual C# project files to list of code projects.
 		/// </summary>
-		/// <param name="configuration">
-		/// Configuration containing flags to use during analysis.
-		/// </param>
-		/// <param name="codeProjects">
-		/// List of code projects to add Visual C# project files to.
-		/// </param>
-		static void AddProjectFiles(Configuration configuration,
-			List<CodeProject> codeProjects)
+		static void AddProjectFiles()
 		{
 			if (Parser.IsParsed(SwitchNames.ProjectFiles))
 			{
@@ -118,51 +116,36 @@ namespace StyleCopCLI
 
 				VisualStudioFiles files = new VisualStudioFiles(filePaths, RecursiveSearch);
 
-				AddProjectFiles(files.CSharpProjectFiles, configuration, codeProjects);
+				AddProjectFiles(files.CSharpProjectFiles);
 			}
 		}
 
 		/// <summary>
-		/// Add given Visual C# project files to given list of projects.
+		/// Add given Visual C# project files to list of code projects.
 		/// </summary>
 		/// <param name="projectFiles">
 		/// Enumerable collection of CSharpProjectFile objects representing
 		/// Visual C# project files to add.
 		/// </param>
-		/// <param name="configuration">
-		/// Configuration containing flags to use during analysis.
-		/// </param>
-		/// <param name="codeProjects">
-		/// List of code projects to add given Visual C# project files to.
-		/// </param>
-		static void AddProjectFiles(IEnumerable<CSharpProjectFile> projectFiles,
-			Configuration configuration, List<CodeProject> codeProjects)
+		static void AddProjectFiles(IEnumerable<CSharpProjectFile> projectFiles)
 		{
 			foreach (CSharpProjectFile projectFile in projectFiles)
 			{
-				CodeProject codeProject = CreateCodeProject(projectFile.DirectoryPath,
-					configuration);
+				CodeProject codeProject = CreateCodeProject(projectFile.DirectoryPath);
 
 				projectFile.Load();
 
 				foreach (CSharpSourceFile sourceFile in projectFile.SourceFiles)
 					AddSourceFile(sourceFile, codeProject);
 
-				codeProjects.Add(codeProject);
+				CodeProjects.Add(codeProject);
 			}
 		}
 
 		/// <summary>
-		/// Add Visual Studio solution files to given list of projects.
+		/// Add Visual Studio solution files to list of code projects.
 		/// </summary>
-		/// <param name="configuration">
-		/// Configuration containing flags to use during analysis.
-		/// </param>
-		/// <param name="codeProjects">
-		/// List of code projects to add Visual Studio solution files to.
-		/// </param>
-		static void AddSolutionFiles(Configuration configuration,
-			List<CodeProject> codeProjects)
+		static void AddSolutionFiles()
 		{
 			if (Parser.IsParsed(SwitchNames.SolutionFiles))
 			{
@@ -174,14 +157,13 @@ namespace StyleCopCLI
 				{
 					solutionFile.Load();
 
-					AddProjectFiles(solutionFile.CSharpProjectFiles, configuration,
-						codeProjects);
+					AddProjectFiles(solutionFile.CSharpProjectFiles);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Add given Visual C# source file to given project.
+		/// Add given Visual C# source file to given code project.
 		/// </summary>
 		/// <param name="sourceFile">
 		/// CSharpSourceFile representing Visual C# source file to add.
@@ -199,16 +181,9 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
-		/// Add Visual C# source files to given list of projects.
+		/// Add Visual C# source files to list of code projects.
 		/// </summary>
-		/// <param name="configuration">
-		/// Configuration containing flags to use during analysis.
-		/// </param>
-		/// <param name="codeProjects">
-		/// List of code projects to add Visual C# source files to.
-		/// </param>
-		static void AddSourceFiles(Configuration configuration,
-			List<CodeProject> codeProjects)
+		static void AddSourceFiles()
 		{
 			if (Parser.IsParsed(SwitchNames.SourceFiles))
 			{
@@ -218,12 +193,11 @@ namespace StyleCopCLI
 
 				foreach (CSharpSourceFile sourceFile in files.CSharpSourceFiles)
 				{
-					CodeProject codeProject = CreateCodeProject(sourceFile.DirectoryPath,
-						configuration);
+					CodeProject codeProject = CreateCodeProject(sourceFile.DirectoryPath);
 
 					AddSourceFile(sourceFile, codeProject);
 
-					codeProjects.Add(codeProject);
+					CodeProjects.Add(codeProject);
 				}
 			}
 		}
@@ -250,22 +224,18 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
-		/// Create code project given directory path and configuration.
+		/// Create code project given directory path.
 		/// </summary>
 		/// <param name="directoryPath">
 		/// String representing path to directory containing code project source
 		/// files.
 		/// </param>
-		/// <param name="configuration">
-		/// Configuration containing flags to use during analysis.
-		/// </param>
 		/// <returns>
 		/// Code project representing source files contained in common directory.
 		/// </returns>
-		static CodeProject CreateCodeProject(string directoryPath,
-			Configuration configuration)
+		static CodeProject CreateCodeProject(string directoryPath)
 		{
-			return new CodeProject(NextCodeProjectKey, directoryPath, configuration);
+			return new CodeProject(NextCodeProjectKey, directoryPath, Configuration);
 		}
 
 		/// <summary>
@@ -361,22 +331,22 @@ namespace StyleCopCLI
 
 			s_console = new StyleCopConsole(settingsFile, true, outputFile, null, true);
 
-			Configuration configuration = new Configuration(null);
+			s_configuration = new Configuration(null);
 
 			if (Parser.IsParsed(SwitchNames.ConfigurationFlags))
 			{
 				string[] flags = Parser.GetValues(SwitchNames.ConfigurationFlags);
 
-				configuration = new Configuration(flags);
+				s_configuration = new Configuration(flags);
 			}
 
 			s_codeProjects = new List<CodeProject>();
 
 			s_codeProjectKey = 0;
 
-			AddProjectFiles(configuration, s_codeProjects);
-			AddSolutionFiles(configuration, s_codeProjects);
-			AddSourceFiles(configuration, s_codeProjects);
+			AddProjectFiles();
+			AddSolutionFiles();
+			AddSourceFiles();
 
 			if (HasCodeProjects)
 			{
@@ -519,6 +489,17 @@ namespace StyleCopCLI
 		static IList<CodeProject> CodeProjects
 		{
 			get { return s_codeProjects; }
+		}
+
+		/// <summary>
+		/// Get configuration containing flags to use during analysis.
+		/// </summary>
+		/// <value>
+		/// Configuration containing flags to use during analysis.
+		/// </value>
+		static Configuration Configuration
+		{
+			get { return s_configuration; }
 		}
 
 		/// <summary>
