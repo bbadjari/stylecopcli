@@ -158,6 +158,7 @@ namespace StyleCopCLI
 					solutionFile.Load();
 
 					AddProjectFiles(solutionFile.CSharpProjectFiles);
+					AddWebSiteDirectories(solutionFile.WebSiteDirectories);
 				}
 			}
 		}
@@ -199,6 +200,28 @@ namespace StyleCopCLI
 
 					CodeProjects.Add(codeProject);
 				}
+			}
+		}
+
+		/// <summary>
+		/// Add given ASP.NET web site directories to list of code projects.
+		/// </summary>
+		/// <param name="webSiteDirectories">
+		/// Enumerable collection of WebSiteDirectory objects representing
+		/// ASP.NET web site directories to add.
+		/// </param>
+		static void AddWebSiteDirectories(IEnumerable<WebSiteDirectory> webSiteDirectories)
+		{
+			foreach (WebSiteDirectory webSiteDirectory in webSiteDirectories)
+			{
+				CodeProject codeProject = CreateCodeProject(webSiteDirectory.DirectoryPath);
+
+				webSiteDirectory.Load();
+
+				foreach (CSharpSourceFile sourceFile in webSiteDirectory.CSharpSourceFiles)
+					AddSourceFile(sourceFile, codeProject);
+
+				CodeProjects.Add(codeProject);
 			}
 		}
 
