@@ -33,6 +33,7 @@
 				<include name="References\CSharpCLI\*.dll" />
 				<include name="References\StyleCop\*.dll" />
 				<include name="References\VSFile\*.dll" />
+				<include name="References\VSFile\*.xml" />
 				<include name="Program.cs" />
 				<include name="StyleCopCLI.csproj" />
 				<include name="StyleCopCLI.sln" />
