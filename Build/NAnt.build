@@ -19,6 +19,7 @@
 				<include name="*" />
 				<include name="..\..\Documentation\*.mkd" />
 				<exclude name="*.pdb" />
+				<exclude name="*.xml" />
 			</fileset>
 		</zip>
 	</target>
