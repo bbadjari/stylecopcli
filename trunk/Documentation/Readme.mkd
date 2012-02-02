@@ -12,6 +12,7 @@ Features
 --------
 
 - Analyze Visual C# source files referenced in Visual Studio solutions.
+- Analyze Visual C# source files contained in ASP.NET web site directories referenced in Visual Studio solutions.
 - Analyze Visual C# source files referenced in Visual C# projects.
 - Analyze individual Visual C# source files.
 - Recursively search subdirectories for files to analyze.
