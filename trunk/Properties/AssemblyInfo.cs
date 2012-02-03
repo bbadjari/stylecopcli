@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Bernard Badjari")]
 [assembly: AssemblyProduct("StyleCop CLI")]
-[assembly: AssemblyCopyright("Copyright (c) 2010-2011 Bernard Badjari")]
+[assembly: AssemblyCopyright("Copyright (c) 2010-2012 Bernard Badjari")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
