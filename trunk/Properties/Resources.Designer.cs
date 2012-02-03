@@ -223,7 +223,7 @@ namespace StyleCopCLI.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visual Studio solution (*.sln) files referencing Visual C# project files to analyze..
+        ///   Looks up a localized string similar to Visual Studio solution (*.sln) files indirectly referencing Visual C# source files to analyze..
         /// </summary>
         internal static string SolutionFilesSwitchDescription {
             get {
