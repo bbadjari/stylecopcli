@@ -172,7 +172,7 @@
     <value>filePaths</value>
   </data>
   <data name="SolutionFilesSwitchDescription" xml:space="preserve">
-    <value>Visual Studio solution (*.sln) files referencing Visual C# project files to analyze.</value>
+    <value>Visual Studio solution (*.sln) files indirectly referencing Visual C# source files to analyze.</value>
   </data>
   <data name="SolutionFilesSwitchLongName" xml:space="preserve">
     <value>solutionFiles</value>
