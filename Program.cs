@@ -70,8 +70,19 @@ namespace StyleCopCLI
 		/// </summary>
 		enum ExitCode : int
 		{
+			/// <summary>
+			/// Application executed successfully.
+			/// </summary>
 			Success = 0,
+
+			/// <summary>
+			/// Application encountered an error during execution.
+			/// </summary>
 			Error = 1,
+
+			/// <summary>
+			/// Application encountered violations during analysis.
+			/// </summary>
 			ViolationsFound = 2
 		}
 
