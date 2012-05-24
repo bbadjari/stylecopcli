@@ -66,6 +66,16 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
+		/// Exit codes returned by application.
+		/// </summary>
+		enum ExitCode : int
+		{
+			Success = 0,
+			Error = 1,
+			ViolationsFound = 2
+		}
+
+		/// <summary>
 		/// URL containing files used in this application.
 		/// </summary>
 		const string Url = "http://sourceforge.net/projects/stylecopcli";
@@ -91,6 +101,11 @@ namespace StyleCopCLI
 		/// StyleCop console used for source code analysis.
 		/// </summary>
 		static StyleCopConsole s_console;
+
+		/// <summary>
+		/// Number of violations encountered during analysis.
+		/// </summary>
+		static int s_numberViolations;
 
 		/// <summary>
 		/// Command-line argument parser.
@@ -226,24 +241,30 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
-		/// Start source code analysis.
+		/// Start source code analysis and return whether completed
+		/// successfully.
 		/// </summary>
-		static void Analyze()
+		/// <returns>
+		/// True if analysis completed successfully, false otherwise.
+		/// </returns>
+		static bool Analyze()
 		{
 			// Determine if no source code files to analyze.
 			if (!HasCodeProjects)
 			{
 				Console.WriteLine(Resources.NoFilesToAnalyze);
 
-				return;
+				return false;
 			}
 
-			Analyzer.Start(CodeProjects, true);
+			bool success = Analyzer.Start(CodeProjects, true);
 
 			// Clean up console.
 
 			Analyzer.OutputGenerated -= OnOutputGenerated;
 			Analyzer.ViolationEncountered -= OnViolationEncountered;
+
+			return success;
 		}
 
 		/// <summary>
@@ -366,6 +387,7 @@ namespace StyleCopCLI
 			s_codeProjects = new List<CodeProject>();
 
 			s_codeProjectKey = 0;
+			s_numberViolations = 0;
 
 			AddProjectFiles();
 			AddSolutionFiles();
@@ -384,8 +406,13 @@ namespace StyleCopCLI
 		/// <param name="arguments">
 		/// Array of strings representing command-line arguments.
 		/// </param>
-		static void Main(string[] arguments)
+		/// <returns>
+		/// Integer representing application exit code.
+		/// </returns>
+		static int Main(string[] arguments)
 		{
+			ExitCode exitCode = ExitCode.Success;
+
 			try
 			{
 				bool printHelp = ParseArguments(arguments);
@@ -393,18 +420,28 @@ namespace StyleCopCLI
 				if (printHelp)
 				{
 					PrintHelp();
-
-					return;
 				}
+				else
+				{
+					InitializeConsole();
 
-				InitializeConsole();
+					bool success = Analyze();
 
-				Analyze();
+					if (success && HasViolations)
+						exitCode = ExitCode.ViolationsFound;
+
+					if (!success)
+						exitCode = ExitCode.Error;
+				}
 			}
 			catch (Exception exception)
 			{
 				Console.WriteLine(exception.Message);
+
+				exitCode = ExitCode.Error;
 			}
+
+			return (int) exitCode;
 		}
 
 		/// <summary>
@@ -476,6 +513,8 @@ namespace StyleCopCLI
 		static void OnViolationEncountered(object sender, ViolationEventArgs e)
 		{
 			// Note: To be used for generating custom violation reports.
+
+			s_numberViolations++;
 		}
 
 		////////////////////////////////////////////////////////////////////////
@@ -549,6 +588,17 @@ namespace StyleCopCLI
 		}
 
 		/// <summary>
+		/// Determine if any violations encountered during analysis.
+		/// </summary>
+		/// <value>
+		/// True if any violations encountered during analysis, false otherwise.
+		/// </value>
+		static bool HasViolations
+		{
+			get { return NumberViolations > 0; }
+		}
+
+		/// <summary>
 		/// Get next unique key assigned to CodeProject objects.
 		/// </summary>
 		/// <value>
@@ -557,6 +607,18 @@ namespace StyleCopCLI
 		static int NextCodeProjectKey
 		{
 			get { return s_codeProjectKey++; }
+		}
+
+		/// <summary>
+		/// Get number of violations encountered during analysis.
+		/// </summary>
+		/// <value>
+		/// Integer representing number of violations encountered during
+		/// analysis.
+		/// </value>
+		static int NumberViolations
+		{
+			get { return s_numberViolations; }
 		}
 
 		/// <summary>
