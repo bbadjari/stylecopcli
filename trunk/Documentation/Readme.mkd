@@ -132,6 +132,29 @@ Analyze multiple Visual Studio solution files:
 
     StyleCopCLI -sln Calculator.sln C:\Projects\ImageEditor.sln
 
+### Exit Codes ###
+
+StyleCop CLI returns an integer representing the application exit code to the calling process upon termination:
+
+<table cellpadding="5">
+   <tr align="left">
+      <th>Code</th>
+      <th>Description</th>
+   </tr>
+   <tr>
+      <td>0</td>
+      <td>Application executed successfully.</td>
+   </tr>
+   <tr>
+      <td>1</td>
+      <td>Application encountered an error during execution.</td>
+   </tr>
+   <tr>
+      <td>2</td>
+      <td>Application encountered violations during analysis.</td>
+   </tr>
+</table>
+
 Releases
 --------
 
