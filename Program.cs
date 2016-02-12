@@ -89,7 +89,7 @@ namespace StyleCopCLI
 		/// <summary>
 		/// URL containing files used in this application.
 		/// </summary>
-		const string Url = "http://sourceforge.net/projects/stylecopcli";
+		const string Url = "https://github.com/bbadjari/stylecopcli";
 
 		////////////////////////////////////////////////////////////////////////
 
