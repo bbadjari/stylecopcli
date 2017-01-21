@@ -4,7 +4,7 @@
 Overview
 --------
 
-StyleCop is a tool initially developed by Microsoft that performs static code analysis on source code written in C# to determine whether the code conforms to a defined set of stylistic rules. These rules describe coding conventions and styles that can be enforced. Analysis results are output to an XML file that indicates which rules were violated. Developers can implement their own custom rules if the standard set of rules included with StyleCop does not meet their needs. In January 2010, StyleCop was made an open source project and is currently being hosted [here](http://stylecop.codeplex.com).
+StyleCop is a tool initially developed by Microsoft that performs static code analysis on source code written in C# to determine whether the code conforms to a defined set of stylistic rules. These rules describe coding conventions and styles that can be enforced. Analysis results are output to an XML file that indicates which rules were violated. Developers can implement their own custom rules if the standard set of rules included with StyleCop does not meet their needs. In January 2010, StyleCop was made an open source project and is currently being hosted [here](https://github.com/StyleCop).
 
 StyleCop CLI is a software application written in C# that provides a command-line interface (CLI) to StyleCop source code analyzers, allowing StyleCop to be integrated as part of batch processes. Most notably, StyleCop CLI can be used by continuous integration (CI) tools that aim to include StyleCop analysis results as part of a continuous quality control process.
 
