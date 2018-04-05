@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StyleCopCLI</RootNamespace>
     <AssemblyName>StyleCopCLI</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <StartupObject>StyleCopCLI.Program</StartupObject>
     <PublishUrl>publish\</PublishUrl>
